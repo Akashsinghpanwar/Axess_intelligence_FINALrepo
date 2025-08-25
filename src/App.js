@@ -124,9 +124,9 @@ function App() {
       
       let errorMessage = 'Connection error. ';
       if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
-        errorMessage += 'Cannot connect to backend. Please check if your backend is running on http://127.0.0.1:8000';
+        errorMessage += 'Cannot connect to backend. Please check if your backend is running on https://axess-backend-new.onrender.com';
       } else if (error.name === 'TypeError' && error.message.includes('CORS')) {
-        errorMessage += 'CORS error. Your backend needs to allow requests from http://localhost:3000';
+        errorMessage += 'CORS error. Your backend needs to allow requests from https://axess-backend-new.onrender.com';
       } else {
         errorMessage += error.message;
       }
@@ -307,7 +307,7 @@ function App() {
   const testBackendConnection = async () => {
     try {
       console.log('Testing backend connection...');
-      const response = await fetch('/chat', {
+      const response = await fetch('https://axess-backend-new.onrender.com/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -328,7 +328,7 @@ function App() {
     } catch (error) {
       console.error('Backend connection failed:', error);
       setBackendStatus('disconnected');
-      showToastMessage('Cannot connect to backend. Make sure it\'s running on http://127.0.0.1:8000');
+      showToastMessage('Cannot connect to backend. Make sure it\'s running on https://axess-backend-new.onrender.com/chat');
     }
   };
 
