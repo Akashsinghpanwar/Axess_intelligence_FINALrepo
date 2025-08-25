@@ -21,7 +21,7 @@ function App() {
     const testBackendConnection = async () => {
       try {
         console.log('Testing backend connection...');
-        const response = await fetch('/chat', {
+        const response = await fetch('https://axess-backend-new.onrender.com/chat', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ function App() {
       } catch (error) {
         console.error('Backend connection failed:', error);
         setBackendStatus('disconnected');
-        showToastMessage('Cannot connect to backend. Make sure it\'s running on http://127.0.0.1:8000');
+        showToastMessage('Cannot connect to backend. Make sure it\'s running on https://axess-backend-new.onrender.com');
       }
     };
 
@@ -79,12 +79,12 @@ function App() {
 
     try {
       console.log('Sending message to backend:', message);
-      console.log('Backend URL:', '/chat');
+      console.log('Backend URL:', 'https://axess-backend-new.onrender.com/chat');
       
       const requestBody = JSON.stringify({ query: message });
       console.log('Request body:', requestBody);
       
-      const response = await fetch('/chat', {
+      const response = await fetch('https://axess-backend-new.onrender.com/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
