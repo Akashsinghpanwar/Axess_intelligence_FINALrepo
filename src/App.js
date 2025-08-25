@@ -1,11 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
-import Starfield from './components/Starfield';
-import FloatingProducts from './components/FloatingProducts';
-import ThemeToggle from './components/ThemeToggle';
-import Logo from './components/Logo';
 import ChatInterface from './components/ChatInterface';
+import FloatingProducts from './components/FloatingProducts';
+import Logo from './components/Logo';
+import Starfield from './components/Starfield';
+import ThemeToggle from './components/ThemeToggle';
 
+const API_BASE = process.env.REACT_APP_BACKEND_URL || 'http://127.0.0.1:8000';
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [messages, setMessages] = useState([]);
@@ -15,13 +16,14 @@ function App() {
   const [toastMessage, setToastMessage] = useState('');
   const [backendStatus, setBackendStatus] = useState('checking');
   const recognitionRef = useRef(null);
+  
 
   // Test backend connection on app load
   useEffect(() => {
     const testBackendConnection = async () => {
       try {
         console.log('Testing backend connection...');
-        const response = await fetch('https://axess-backend-new.onrender.com/chat', {
+        const response = await fetch(`${API_BASE}/chat`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -41,7 +43,7 @@ function App() {
       } catch (error) {
         console.error('Backend connection failed:', error);
         setBackendStatus('disconnected');
-        showToastMessage('Cannot connect to backend. Make sure it\'s running on https://axess-backend-new.onrender.com');
+        showToastMessage(`Cannot connect to backend. Make sure it\'s running on ${API_BASE}/chat`);
       }
     };
 
@@ -79,12 +81,12 @@ function App() {
 
     try {
       console.log('Sending message to backend:', message);
-      console.log('Backend URL:', 'https://axess-backend-new.onrender.com/chat');
+      console.log('Backend URL:', `${API_BASE}/chat`);
       
       const requestBody = JSON.stringify({ query: message });
       console.log('Request body:', requestBody);
       
-      const response = await fetch('https://axess-backend-new.onrender.com/chat', {
+      const response = await fetch(`${API_BASE}/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -124,9 +126,9 @@ function App() {
       
       let errorMessage = 'Connection error. ';
       if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
-        errorMessage += 'Cannot connect to backend. Please check if your backend is running on https://axess-backend-new.onrender.com';
+        errorMessage += `Cannot connect to backend. Please check if your backend is running on ${API_BASE}/chat`;
       } else if (error.name === 'TypeError' && error.message.includes('CORS')) {
-        errorMessage += 'CORS error. Your backend needs to allow requests from https://axess-backend-new.onrender.com';
+        errorMessage += `CORS error. Your backend needs to allow requests from ${API_BASE}/chat`;
       } else {
         errorMessage += error.message;
       }
@@ -307,7 +309,7 @@ function App() {
   const testBackendConnection = async () => {
     try {
       console.log('Testing backend connection...');
-      const response = await fetch('https://axess-backend-new.onrender.com/chat', {
+      const response = await fetch(`${API_BASE}/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -328,7 +330,7 @@ function App() {
     } catch (error) {
       console.error('Backend connection failed:', error);
       setBackendStatus('disconnected');
-      showToastMessage('Cannot connect to backend. Make sure it\'s running on https://axess-backend-new.onrender.com/chat');
+      showToastMessage(`Cannot connect to backend. Make sure it\'s running on ${API_BASE}/chat`);
     }
   };
 
